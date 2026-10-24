@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Teachable Machine — Paper Waste Classifier</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --panel: #171a23;
+    --border: #262a36;
+    --text: #e8eaf0;
+    --muted: #8b93a7;
+    --accent: #4f8cff;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 720px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+  }
+
+  h1 {
+    margin: 0 0 4px;
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
+  }
+
+  .sub {
+    margin: 0 0 22px;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  .tabs {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tab {
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    padding: 8px 12px;
+    color: var(--muted);
+  }
+
+  .tab.active {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+  }
+
+  .controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
+
+  button {
+    font: inherit;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 10px 18px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, opacity 0.15s;
+  }
+
+  button:hover:not(:disabled) { border-color: var(--accent); }
+  button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+  button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  button.primary:hover:not(:disabled) { background: #3d7bf0; }
+
+  .stage {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  #webcam-container canvas {
+    width: 260px;
+    height: 260px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: #000;
+    display: block;
+  }
+
+  #webcam-container:empty::after {
+    content: "Camera off";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 260px;
+    height: 260px;
+    border-radius: 14px;
+    border: 1px dashed var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  #photo-preview {
+    width: 260px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: #000;
+    display: none;
+  }
+
+  #photo-preview.visible { display: block; }
+
+  #photo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 260px;
+    height: 260px;
+    border-radius: 14px;
+    border: 1px dashed var(--border);
+    color: var(--muted);
+    font-size: 0.8rem;
+  }
+
+  #photo-placeholder.hidden { display: none; }
+
+  .labels { flex: 1; min-width: 220px; }
+
+  .label-row { margin-bottom: 14px; }
+
+  .label-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+
+  .label-head .prob { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  .bar {
+    height: 8px;
+    border-radius: 99px;
+    background: var(--border);
+    overflow: hidden;
+  }
+
+  .bar > span {
+    display: block;
+    height: 100%;
+    width: 0;
+    border-radius: 99px;
+    background: var(--accent);
+    transition: width 0.12s linear;
+  }
+
+  /* ---- Single verdict block (Photo mode) ---- */
+  .verdict { display: none; }
+  .verdict.visible { display: block; }
+
+  .verdict-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #6ee7a8;
+    background: rgba(110, 231, 168, 0.12);
+    border: 1px solid rgba(110, 231, 168, 0.35);
+    padding: 3px 9px;
+    border-radius: 99px;
+    margin-bottom: 10px;
+  }
+
+  .verdict-badge.uncertain {
+    color: #ffcf6b;
+    background: rgba(255, 207, 107, 0.12);
+    border-color: rgba(255, 207, 107, 0.35);
+  }
+
+  .verdict-label {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+  }
+
+  .verdict-note {
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  .scores-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin: 0 0 12px;
+  }
+
+  .status {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    min-height: 1.2em;
+  }
+
+  .status.error { color: #ff6b6b; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <h1>Paper Waste Classifier</h1>
+  <p class="sub">Classify paper waste as a paper cup, bowl or box — live, or from a captured photo.</p>
+
+  <div class="tabs">
+    <button id="tabLive" class="tab active" type="button">Live detection</button>
+    <button id="tabPhoto" class="tab" type="button">Photo classify</button>
+  </div>
+
+  <!-- ============ LIVE MODE ============ -->
+  <div id="liveMode">
+    <div class="controls">
+      <button id="startBtn" class="primary" type="button">Start camera</button>
+      <button id="stopBtn" type="button" disabled>Stop</button>
+    </div>
+
+    <div class="stage">
+      <div id="webcam-container"></div>
+      <div id="label-container" class="labels"></div>
+    </div>
+  </div>
+
+  <!-- ============ PHOTO MODE ============ -->
+  <div id="photoMode" style="display:none">
+    <div class="controls">
+      <input id="photoInput" type="file" accept="image/*" capture="environment" hidden />
+      <button id="takePhotoBtn" class="primary" type="button">Take / choose photo</button>
+      <button id="clearPhotoBtn" type="button" disabled>Clear</button>
+    </div>
+
+    <div class="stage">
+      <div id="photo-placeholder">No photo yet</div>
+      <img id="photo-preview" alt="Captured photo" />
+
+      <div class="labels">
+        <div id="verdictBox" class="verdict">
+          <div id="verdictBadge" class="verdict-badge">Identified</div>
+          <h2 id="verdictLabel" class="verdict-label">—</h2>
+          <p id="verdictNote" class="verdict-note">
+            The final predicted class for the captured image
+          </p>
+        </div>
+
+        <div id="photoScores"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="status" class="status"></div>
+</div>
+
+<!-- Local copies in libs/. These must be tfjs 1.7.4 and @teachablemachine/image 0.8.4 -->
+<script src="libs/tf.min.js"></script>
+<script src="libs/teachablemachine-image.min.js"></script>
+
+<script>
+(function () {
+  "use strict";
+
+  // Correct model URL — keep this exact string. Previously the value was
+  // corrupted with stray text, which made the page request the model
+  // from the Live Server host instead of Google (hence the 404).
+  
+const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
+
+
+  const SIZE = 260;   // display size in px
+  const FLIP = true;  // mirror the webcam
+
+  // Below this, we refuse to name a class instead of guessing.
+  const MIN_CONFIDENCE = 0.60;
+
+  // ---- Element handles ----
+  const tabLive = document.getElementById("tabLive");
+  const tabPhoto = document.getElementById("tabPhoto");
+  const liveMode = document.getElementById("liveMode");
+  const photoMode = document.getElementById("photoMode");
+
+  const startBtn = document.getElementById("startBtn");
+  const stopBtn = document.getElementById("stopBtn");
+  const statusEl = document.getElementById("status");
+  const webcamContainer = document.getElementById("webcam-container");
+  const labelContainer = document.getElementById("label-container");
+
+  const photoInput = document.getElementById("photoInput");
+  const takePhotoBtn = document.getElementById("takePhotoBtn");
+  const clearPhotoBtn = document.getElementById("clearPhotoBtn");
+  const photoPreview = document.getElementById("photo-preview");
+  const photoPlaceholder = document.getElementById("photo-placeholder");
+  const verdictBox = document.getElementById("verdictBox");
+  const verdictBadge = document.getElementById("verdictBadge");
+  const verdictLabel = document.getElementById("verdictLabel");
+  const verdictNote = document.getElementById("verdictNote");
+  const photoScores = document.getElementById("photoScores");
+
+  // ---- State ----
+  let model = null;
+  let webcam = null;
+  let maxPredictions = 0;
+  let running = false;
+  let rafId = null;
+  let labelEls = [];
+  let lastStatusKey = "";
+  let currentObjectURL = null;
+
+  function setStatus(message, isError) {
+    // Avoid thrashing the DOM with the same message every frame
+    const key = (isError ? "e:" : "i:") + message;
+    if (key === lastStatusKey) return;
+    lastStatusKey = key;
+    statusEl.textContent = message;
+    statusEl.classList.toggle("error", Boolean(isError));
+  }
+
+  async function loadModel() {
+    if (model) return;
+    setStatus("Loading model…");
+    const modelURL = MODEL_URL + "model.json";
+    const metadataURL = MODEL_URL + "metadata.json";
+    model = await tmImage.load(modelURL, metadataURL);
+    maxPredictions = model.getTotalClasses();
+  }
+
+  // ============================================================
+  //  TAB SWITCHING
+  // ============================================================
+  function showLive() {
+    tabLive.classList.add("active");
+    tabPhoto.classList.remove("active");
+    liveMode.style.display = "";
+    photoMode.style.display = "none";
+    setStatus(running ? "Running — " + maxPredictions + " classes loaded." : "Camera off.");
+  }
+
+  function showPhoto() {
+    tabPhoto.classList.add("active");
+    tabLive.classList.remove("active");
+    photoMode.style.display = "";
+    liveMode.style.display = "none";
+    // Free the camera while the user is in photo mode
+    if (running) stop();
+    setStatus("Choose or take a photo to classify.");
+  }
+
+  tabLive.addEventListener("click", showLive);
+  tabPhoto.addEventListener("click", showPhoto);
+
+  // ============================================================
+  //  LIVE MODE
+  // ============================================================
+  function buildLabelRows() {
+    labelContainer.innerHTML = "";
+    labelEls = [];
+    for (let i = 0; i < maxPredictions; i++) {
+      const row = document.createElement("div");
+      row.className = "label-row";
+
+      const head = document.createElement("div");
+      head.className = "label-head";
+
+      const name = document.createElement("span");
+      name.className = "name";
+      name.textContent = "…";
+
+      const prob = document.createElement("span");
+      prob.className = "prob";
+      prob.textContent = "0.00";
+
+      head.append(name, prob);
+
+      const bar = document.createElement("div");
+      bar.className = "bar";
+      const fill = document.createElement("span");
+      bar.appendChild(fill);
+
+      row.append(head, bar);
+      labelContainer.appendChild(row);
+
+      labelEls.push({ name, prob, fill });
+    }
+  }
+
+  async function predict() {
+    if (!model || !webcam || !running) return;
+
+    const prediction = await model.predict(webcam.canvas);
+
+    // Highest confidence first, so the winning class reads at a glance
+    const sorted = prediction
+      .map((p, i) => ({ ...p, i }))
+      .sort((a, b) => b.probability - a.probability);
+
+    for (let rank = 0; rank < sorted.length; rank++) {
+      const p = sorted[rank];
+      const el = labelEls[p.i];
+      if (!el) continue;
+
+      const pct = (p.probability * 100).toFixed(1);
+      el.name.textContent = (rank === 0 ? "▸ " : "") + p.className;
+      el.name.style.fontWeight = rank === 0 ? "600" : "400";
+      el.prob.textContent = pct + "%";
+      el.fill.style.width = pct + "%";
+      el.fill.style.opacity = rank === 0 ? "1" : "0.5";
+    }
+  }
+
+  async function loop() {
+    if (!running) return;
+    webcam.update();
+    await predict();
+    if (running) rafId = window.requestAnimationFrame(loop);
+  }
+
+  async function start() {
+    if (running) return;
+    startBtn.disabled = true;
+    setStatus("Requesting camera access…");
+
+    try {
+      await loadModel();
+      buildLabelRows();
+
+      webcam = new tmImage.Webcam(SIZE, SIZE, FLIP);
+      await webcam.setup();
+      await webcam.play();
+
+      webcamContainer.innerHTML = "";
+      webcamContainer.appendChild(webcam.canvas);
+
+      running = true;
+      stopBtn.disabled = false;
+      setStatus("Running — " + maxPredictions + " classes loaded.");
+      rafId = window.requestAnimationFrame(loop);
+    } catch (err) {
+      console.error(err);
+      startBtn.disabled = false;
+      running = false;
+      stopBtn.disabled = true;
+
+      if (err && /permission|denied|NotAllowed/i.test(err.name + " " + err.message)) {
+        setStatus("Camera permission denied. Allow camera access and try again.", true);
+      } else {
+        setStatus("Could not start: " + (err && err.message ? err.message : err), true);
+      }
+    }
+  }
+
+  function stop() {
+    running = false;
+    if (rafId !== null) {
+      window.cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+    if (webcam) {
+      // Stops the camera tracks so the recording indicator turns off
+      webcam.stop();
+      webcam = null;
+    }
+    webcamContainer.innerHTML = "";
+    labelContainer.innerHTML = "";
+    labelEls = [];
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+    setStatus("Stopped.");
+  }
+
+  startBtn.addEventListener("click", start);
+  stopBtn.addEventListener("click", stop);
+
+  // ============================================================
+  //  PHOTO MODE  —  capture one still, classify once, name it
+  // ============================================================
+
+  // This model reports imageSize 224 in metadata.json, so the input is
+  // fixed at 224x224.
+  function getInputSize() {
+    return 224;
+  }
+
+  // Draw the chosen photo onto a square canvas, centre-cropped, so the
+  // model sees the same framing it was trained on regardless of the
+  // original photo's resolution or aspect ratio.
+  function toSquareCanvas(img) {
+    const side = getInputSize();
+    const canvas = document.createElement("canvas");
+    canvas.width = side;
+    canvas.height = side;
+
+    const ctx = canvas.getContext("2d");
+    const sw = img.naturalWidth || img.width;
+    const sh = img.naturalHeight || img.height;
+    const crop = Math.min(sw, sh);
+
+    ctx.drawImage(
+      img,
+      (sw - crop) / 2, (sh - crop) / 2, crop, crop,  // source: centre square
+      0, 0, side, side                                // dest: model input
+    );
+
+    return canvas;
+  }
+
+  function renderVerdict(className, probability) {
+    const pct = (probability * 100).toFixed(1);
+    verdictBox.classList.add("visible");
+
+    if (probability < MIN_CONFIDENCE) {
+      verdictBadge.textContent = "Uncertain";
+      verdictBadge.classList.add("uncertain");
+      verdictLabel.textContent = "Not confirmed";
+      verdictNote.textContent =
+        "The model's best guess was \"" + className + "\" at only " + pct +
+        "%. Retake the photo closer to the item, on a plain background, with good light.";
+    } else {
+      verdictBadge.textContent = "Identified";
+      verdictBadge.classList.remove("uncertain");
+      verdictLabel.textContent = className;
+      verdictNote.textContent =
+        "The final predicted class for the captured image — " + pct + "% confidence.";
+    }
+  }
+
+  function renderScores(prediction) {
+    photoScores.innerHTML = "";
+
+    const title = document.createElement("p");
+    title.className = "scores-title";
+    title.textContent = "All class scores";
+    photoScores.appendChild(title);
+
+    prediction
+      .map((p, i) => ({ ...p, i }))
+      .sort((a, b) => b.probability - a.probability)
+      .forEach((p, rank) => {
+        const row = document.createElement("div");
+        row.className = "label-row";
+
+        const head = document.createElement("div");
+        head.className = "label-head";
+
+        const name = document.createElement("span");
+        name.textContent = (rank === 0 ? "▸ " : "") + p.className;
+        name.style.fontWeight = rank === 0 ? "600" : "400";
+
+        const prob = document.createElement("span");
+        prob.className = "prob";
+        prob.textContent = (p.probability * 100).toFixed(1) + "%";
+
+        head.append(name, prob);
+
+        const bar = document.createElement("div");
+        bar.className = "bar";
+        const fill = document.createElement("span");
+        fill.style.width = (p.probability * 100).toFixed(1) + "%";
+        fill.style.opacity = rank === 0 ? "1" : "0.5";
+        bar.appendChild(fill);
+
+        row.append(head, bar);
+        photoScores.appendChild(row);
+      });
+  }
+
+  async function classifyPhoto(file) {
+    verdictBox.classList.remove("visible");
+    photoScores.innerHTML = "";
+    setStatus("Classifying photo…");
+
+    // Show the photo the user just took
+    if (currentObjectURL) window.URL.revokeObjectURL(currentObjectURL);
+    currentObjectURL = window.URL.createObjectURL(file);
+    photoPreview.src = currentObjectURL;
+    photoPreview.classList.add("visible");
+    photoPlaceholder.classList.add("hidden");
+
+    try {
+      await loadModel();
+    } catch (err) {
+      console.error(err);
+      setStatus("Could not load the model. Check your connection and reload.", true);
+      takePhotoBtn.disabled = false;
+      return;
+    }
+
+    const img = new Image();
+
+    img.onload = async function () {
+      try {
+        const canvas = toSquareCanvas(img);
+        const prediction = await model.predict(canvas);
+
+        const sorted = prediction
+          .map((p, i) => ({ ...p, i }))
+          .sort((a, b) => b.probability - a.probability);
+
+        const top = sorted[0];
+        renderVerdict(top.className, top.probability);
+        renderScores(prediction);
+
+        setStatus("Done.");
+      } catch (err) {
+        console.error(err);
+        setStatus("Could not classify this image: " + (err && err.message ? err.message : err), true);
+      } finally {
+        takePhotoBtn.disabled = false;
+      }
+    };
+
+    img.onerror = function () {
+      setStatus("That file could not be read as an image.", true);
+      takePhotoBtn.disabled = false;
+    };
+
+    img.src = currentObjectURL;
+  }
+
+  takePhotoBtn.addEventListener("click", function () {
+    photoInput.click();
+  });
+
+  photoInput.addEventListener("change", function (event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    takePhotoBtn.disabled = true;
+    clearPhotoBtn.disabled = false;
+    classifyPhoto(file);
+
+    // Allow re-selecting the same file later
+    photoInput.value = "";
+  });
+
+  clearPhotoBtn.addEventListener("click", function () {
+    if (currentObjectURL) {
+      window.URL.revokeObjectURL(currentObjectURL);
+      currentObjectURL = null;
+    }
+    photoPreview.classList.remove("visible");
+    photoPreview.removeAttribute("src");
+    photoPlaceholder.classList.remove("hidden");
+    verdictBox.classList.remove("visible");
+    photoScores.innerHTML = "";
+    clearPhotoBtn.disabled = true;
+    setStatus("Choose or take a photo to classify.");
+  });
+
+  // Release the camera when the tab/page goes away
+  window.addEventListener("pagehide", () => { if (running) stop(); });
+})();
+</script>
+
+</body>
+</html>
