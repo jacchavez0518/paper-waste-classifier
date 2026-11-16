@@ -14,7 +14,9 @@
     --accent: #4f8cff;
   }
 
+
   * { box-sizing: border-box; }
+
 
   body {
     margin: 0;
@@ -28,6 +30,7 @@
     font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
 
+
   .app {
     width: 100%;
     max-width: 720px;
@@ -37,11 +40,13 @@
     padding: 28px;
   }
 
+
   h1 {
     margin: 0 0 4px;
     font-size: 1.35rem;
     letter-spacing: -0.01em;
   }
+
 
   .sub {
     margin: 0 0 22px;
@@ -49,12 +54,14 @@
     font-size: 0.875rem;
   }
 
+
   .tabs {
     display: flex;
     gap: 6px;
     margin-bottom: 16px;
     border-bottom: 1px solid var(--border);
   }
+
 
   .tab {
     border: none;
@@ -64,10 +71,12 @@
     color: var(--muted);
   }
 
+
   .tab.active {
     color: var(--text);
     border-bottom-color: var(--accent);
   }
+
 
   .controls {
     display: flex;
@@ -75,6 +84,7 @@
     flex-wrap: wrap;
     margin-bottom: 22px;
   }
+
 
   button {
     font: inherit;
@@ -89,8 +99,10 @@
     transition: background 0.15s, border-color 0.15s, opacity 0.15s;
   }
 
+
   button:hover:not(:disabled) { border-color: var(--accent); }
   button:disabled { opacity: 0.45; cursor: not-allowed; }
+
 
   button.primary {
     background: var(--accent);
@@ -98,7 +110,9 @@
     color: #fff;
   }
 
+
   button.primary:hover:not(:disabled) { background: #3d7bf0; }
+
 
   .stage {
     display: flex;
@@ -106,6 +120,7 @@
     flex-wrap: wrap;
     align-items: flex-start;
   }
+
 
   #webcam-container canvas {
     width: 260px;
@@ -115,6 +130,7 @@
     background: #000;
     display: block;
   }
+
 
   #webcam-container:empty::after {
     content: "Camera off";
@@ -129,6 +145,7 @@
     font-size: 0.8rem;
   }
 
+
   #photo-preview {
     width: 260px;
     height: 260px;
@@ -139,7 +156,9 @@
     display: none;
   }
 
+
   #photo-preview.visible { display: block; }
+
 
   #photo-placeholder {
     display: flex;
@@ -153,11 +172,15 @@
     font-size: 0.8rem;
   }
 
+
   #photo-placeholder.hidden { display: none; }
+
 
   .labels { flex: 1; min-width: 220px; }
 
+
   .label-row { margin-bottom: 14px; }
+
 
   .label-head {
     display: flex;
@@ -166,7 +189,9 @@
     margin-bottom: 6px;
   }
 
+
   .label-head .prob { color: var(--muted); font-variant-numeric: tabular-nums; }
+
 
   .bar {
     height: 8px;
@@ -174,6 +199,7 @@
     background: var(--border);
     overflow: hidden;
   }
+
 
   .bar > span {
     display: block;
@@ -184,9 +210,11 @@
     transition: width 0.12s linear;
   }
 
+
   /* ---- Single verdict block (Photo mode) ---- */
   .verdict { display: none; }
   .verdict.visible { display: block; }
+
 
   .verdict-badge {
     display: inline-block;
@@ -202,11 +230,13 @@
     margin-bottom: 10px;
   }
 
+
   .verdict-badge.uncertain {
     color: #ffcf6b;
     background: rgba(255, 207, 107, 0.12);
     border-color: rgba(255, 207, 107, 0.35);
   }
+
 
   .verdict-label {
     font-size: 1.8rem;
@@ -215,11 +245,13 @@
     margin: 0 0 6px;
   }
 
+
   .verdict-note {
     margin: 0 0 18px;
     color: var(--muted);
     font-size: 0.85rem;
   }
+
 
   .scores-title {
     font-size: 0.75rem;
@@ -229,6 +261,7 @@
     margin: 0 0 12px;
   }
 
+
   .status {
     margin-top: 20px;
     font-size: 0.8rem;
@@ -236,7 +269,9 @@
     min-height: 1.2em;
   }
 
+
   .status.error { color: #ff6b6b; }
+
 
   /* ================= NEW: Tally + history ================= */
   .history {
@@ -244,6 +279,7 @@
     padding-top: 22px;
     border-top: 1px solid var(--border);
   }
+
 
   .history-head {
     display: flex;
@@ -254,15 +290,18 @@
     margin-bottom: 14px;
   }
 
+
   .history-head h2 {
     margin: 0;
     font-size: 1.05rem;
     letter-spacing: -0.01em;
   }
 
+
   button.danger { color: #ff8a8a; }
   button.danger:hover:not(:disabled) { border-color: #ff6b6b; }
   button.small { padding: 7px 14px; font-size: 0.8rem; }
+
 
   .tally {
     display: grid;
@@ -270,6 +309,7 @@
     gap: 10px;
     margin-bottom: 10px;
   }
+
 
   .tally-card {
     background: var(--bg);
@@ -279,10 +319,12 @@
     transition: border-color 0.2s, background 0.2s;
   }
 
+
   .tally-card.flash {
     border-color: var(--accent);
     background: rgba(79, 140, 255, 0.12);
   }
+
 
   .tally-count {
     font-size: 2.2rem;
@@ -292,12 +334,14 @@
     line-height: 1.1;
   }
 
+
   .tally-name {
     margin-top: 4px;
     font-size: 0.75rem;
     color: var(--muted);
     text-transform: capitalize;
   }
+
 
   .tally-pct {
     margin-top: 2px;
@@ -306,11 +350,13 @@
     font-variant-numeric: tabular-nums;
   }
 
+
   .tally-summary {
     margin: 0 0 18px;
     font-size: 0.8rem;
     color: var(--muted);
   }
+
 
   .history-list {
     list-style: none;
@@ -322,6 +368,7 @@
     border-radius: 12px;
   }
 
+
   .history-item {
     display: flex;
     align-items: center;
@@ -332,9 +379,12 @@
     border-bottom: 1px solid var(--border);
   }
 
+
   .history-item:last-child { border-bottom: none; }
 
+
   .history-item .what { font-weight: 600; text-transform: capitalize; }
+
 
   .history-item .meta {
     color: var(--muted);
@@ -343,6 +393,7 @@
     font-variant-numeric: tabular-nums;
   }
 
+
   .history-item button {
     padding: 2px 9px;
     font-size: 0.9rem;
@@ -350,6 +401,7 @@
     color: var(--muted);
     border-radius: 8px;
   }
+
 
   .history-empty {
     padding: 18px 14px;
@@ -363,14 +415,17 @@
 </head>
 <body>
 
+
 <div class="app">
   <h1>Paper Waste Classifier</h1>
   <p class="sub">Classify paper waste as a paper cup, bowl or box — live, or from a captured photo.</p>
+
 
   <div class="tabs">
     <button id="tabLive" class="tab active" type="button">Live detection</button>
     <button id="tabPhoto" class="tab" type="button">Photo classify</button>
   </div>
+
 
   <!-- ============ LIVE MODE ============ -->
   <div id="liveMode">
@@ -379,11 +434,13 @@
       <button id="stopBtn" type="button" disabled>Stop</button>
     </div>
 
+
     <div class="stage">
       <div id="webcam-container"></div>
       <div id="label-container" class="labels"></div>
     </div>
   </div>
+
 
   <!-- ============ PHOTO MODE ============ -->
   <div id="photoMode" style="display:none">
@@ -393,9 +450,11 @@
       <button id="clearPhotoBtn" type="button" disabled>Clear</button>
     </div>
 
+
     <div class="stage">
       <div id="photo-placeholder">No photo yet</div>
       <img id="photo-preview" alt="Captured photo" />
+
 
       <div class="labels">
         <div id="verdictBox" class="verdict">
@@ -406,12 +465,15 @@
           </p>
         </div>
 
+
         <div id="photoScores"></div>
       </div>
     </div>
   </div>
 
+
   <div id="status" class="status"></div>
+
 
   <!-- ============ NEW: TALLY + HISTORY ============ -->
   <section class="history" aria-labelledby="historyTitle">
@@ -420,19 +482,23 @@
       <button id="resetBtn" class="danger small" type="button" disabled>Reset tally</button>
     </div>
 
+
     <div id="tally" class="tally"></div>
     <p id="tallySummary" class="tally-summary"></p>
     <ul id="historyList" class="history-list"></ul>
   </section>
 </div>
 
+
 <!-- Local copies in libs/. These must be tfjs 1.7.4 and @teachablemachine/image 0.8.4 -->
 <script src="libs/tf.min.js"></script>
 <script src="libs/teachablemachine-image.min.js"></script>
 
+
 <script>
 (function () {
   "use strict";
+
 
   // Correct model URL — keep this exact string. Previously the value was
   // corrupted with stray text, which made the page request the model
@@ -441,11 +507,15 @@
 const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
 
 
+
+
   const SIZE = 260;   // display size in px
   const FLIP = true;  // mirror the webcam
 
+
   // Below this, we refuse to name a class instead of guessing.
   const MIN_CONFIDENCE = 0.60;
+
 
   // ---- NEW: tally settings ----
   // Live mode: a class must stay on top (>= MIN_CONFIDENCE) this long
@@ -455,17 +525,20 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
   const MAX_HISTORY = 500;
   const UNCERTAIN = "__uncertain"; // a take the model wasn't sure about
 
+
   // ---- Element handles ----
   const tabLive = document.getElementById("tabLive");
   const tabPhoto = document.getElementById("tabPhoto");
   const liveMode = document.getElementById("liveMode");
   const photoMode = document.getElementById("photoMode");
 
+
   const startBtn = document.getElementById("startBtn");
   const stopBtn = document.getElementById("stopBtn");
   const statusEl = document.getElementById("status");
   const webcamContainer = document.getElementById("webcam-container");
   const labelContainer = document.getElementById("label-container");
+
 
   const photoInput = document.getElementById("photoInput");
   const takePhotoBtn = document.getElementById("takePhotoBtn");
@@ -478,10 +551,12 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
   const verdictNote = document.getElementById("verdictNote");
   const photoScores = document.getElementById("photoScores");
 
+
   // NEW
   const tallyEl = document.getElementById("tally");
   const tallySummary = document.getElementById("tallySummary");
   const resetBtn = document.getElementById("resetBtn");
+
 
   // ---- State ----
   let model = null;
@@ -493,12 +568,14 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
   let lastStatusKey = "";
   let currentObjectURL = null;
 
+
   // NEW
   let classLabels = [];     // class names from the model
   let history = [];         // newest first
   let liveCandidate = null; // class currently being held in live mode
   let liveSince = 0;
   let liveLocked = false;   // already counted this hold
+
 
   function setStatus(message, isError) {
     // Avoid thrashing the DOM with the same message every frame
@@ -509,6 +586,7 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
     statusEl.classList.toggle("error", Boolean(isError));
   }
 
+
   async function loadModel() {
     if (model) return;
     setStatus("Loading model…");
@@ -518,6 +596,7 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
     maxPredictions = model.getTotalClasses();
     captureLabels(); // NEW
   }
+
 
   // ============================================================
   //  NEW: TALLY + HISTORY  (saved in this browser via localStorage)
@@ -531,6 +610,7 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
     renderHistory();
   }
 
+
   function loadHistory() {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -541,6 +621,7 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
     }
   }
 
+
   function saveHistory() {
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
@@ -548,6 +629,7 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
       // Storage unavailable — tally still works for this session
     }
   }
+
 
   function getCounts() {
     const counts = {};
@@ -559,6 +641,7 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
     return counts;
   }
 
+
   function formatTime(ts) {
     const d = new Date(ts);
     const today = new Date();
@@ -567,6 +650,7 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
     return d.toLocaleDateString([], { month: "short", day: "numeric" }) + ", " + time;
   }
 
+
   function renderHistory(flashLabel) {
     // --- Tally cards ---
     const counts = getCounts();
@@ -574,25 +658,31 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
     const uncertain = history.length - identified;
     tallyEl.innerHTML = "";
 
+
     Object.keys(counts).forEach(function (label) {
       const card = document.createElement("div");
       card.className = "tally-card";
       card.dataset.label = label;
 
+
       const num = document.createElement("div");
       num.className = "tally-count";
       num.textContent = counts[label];
+
 
       const name = document.createElement("div");
       name.className = "tally-name";
       name.textContent = label;
 
+
       const pct = document.createElement("div");
       pct.className = "tally-pct";
       pct.textContent = identified ? Math.round((counts[label] / identified) * 100) + "%" : "0%";
 
+
       card.append(num, name, pct);
       tallyEl.appendChild(card);
+
 
       if (flashLabel && flashLabel === label) {
         card.classList.add("flash");
@@ -600,12 +690,15 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
       }
     });
 
+
     tallySummary.textContent =
       history.length + " take" + (history.length === 1 ? "" : "s") + " in total" +
       (uncertain ? " · " + uncertain + " uncertain (not counted in the segments)" : "") + ".";
 
+
     // --- History list ---
     let list = document.getElementById("historyList");
+
 
     if (!history.length) {
       const empty = document.createElement("div");
@@ -617,6 +710,7 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
       return;
     }
 
+
     // If the empty message replaced the list earlier, put a <ul> back
     if (list.tagName !== "UL") {
       const ul = document.createElement("ul");
@@ -627,9 +721,11 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
     }
     list.innerHTML = "";
 
+
     history.forEach(function (h) {
       const li = document.createElement("li");
       li.className = "history-item";
+
 
       const what = document.createElement("span");
       what.className = "what";
@@ -637,11 +733,13 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
         ? "Uncertain" + (h.guess ? " (best guess: " + h.guess + ")" : "")
         : h.label;
 
+
       const meta = document.createElement("span");
       meta.className = "meta";
       meta.textContent =
         (h.source === "live" ? "Live" : "Photo") + " · " +
         (h.confidence * 100).toFixed(0) + "% · " + formatTime(h.time);
+
 
       const del = document.createElement("button");
       del.type = "button";
@@ -654,18 +752,22 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
         renderHistory();
       });
 
+
       const right = document.createElement("span");
       right.style.display = "flex";
       right.style.alignItems = "center";
       right.style.gap = "10px";
       right.append(meta, del);
 
+
       li.append(what, right);
       list.appendChild(li);
     });
 
+
     resetBtn.disabled = false;
   }
+
 
   function addEntry(label, confidence, source, guess) {
     history.unshift({
@@ -681,6 +783,7 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
     renderHistory(label);
   }
 
+
   resetBtn.addEventListener("click", function () {
     if (!history.length) return;
     if (!window.confirm("Reset the tally and clear all history?")) return;
@@ -689,15 +792,18 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
     renderHistory();
   });
 
+
   // Live mode: count an item once it has been held steady
   function trackLive(top) {
     const now = window.performance.now();
+
 
     if (top.probability < MIN_CONFIDENCE) {
       liveCandidate = null;
       liveLocked = false;
       return;
     }
+
 
     if (top.className !== liveCandidate) {
       liveCandidate = top.className;
@@ -706,11 +812,13 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
       return;
     }
 
+
     if (!liveLocked && now - liveSince >= HOLD_MS) {
       liveLocked = true;
       addEntry(top.className, top.probability, "live");
     }
   }
+
 
   function resetLiveTracking() {
     liveCandidate = null;
@@ -718,7 +826,428 @@ const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
     liveLocked = false;
   }
 
+
   // ============================================================
   //  TAB SWITCHING
   // ============================================================
   function showLive() {
+    tabLive.classList.add("active");
+    tabPhoto.classList.remove("active");
+    liveMode.style.display = "";
+    photoMode.style.display = "none";
+    setStatus(running ? "Running — " + maxPredictions + " classes loaded." : "Camera off.");
+  }
+
+
+  function showPhoto() {
+    tabPhoto.classList.add("active");
+    tabLive.classList.remove("active");
+    photoMode.style.display = "";
+    liveMode.style.display = "none";
+    // Free the camera while the user is in photo mode
+    if (running) stop();
+    setStatus("Choose or take a photo to classify.");
+  }
+
+
+  tabLive.addEventListener("click", showLive);
+  tabPhoto.addEventListener("click", showPhoto);
+
+
+  // ============================================================
+  //  LIVE MODE
+  // ============================================================
+  function buildLabelRows() {
+    labelContainer.innerHTML = "";
+    labelEls = [];
+    for (let i = 0; i < maxPredictions; i++) {
+      const row = document.createElement("div");
+      row.className = "label-row";
+
+
+      const head = document.createElement("div");
+      head.className = "label-head";
+
+
+      const name = document.createElement("span");
+      name.className = "name";
+      name.textContent = "…";
+
+
+      const prob = document.createElement("span");
+      prob.className = "prob";
+      prob.textContent = "0.00";
+
+
+      head.append(name, prob);
+
+
+      const bar = document.createElement("div");
+      bar.className = "bar";
+      const fill = document.createElement("span");
+      bar.appendChild(fill);
+
+
+      row.append(head, bar);
+      labelContainer.appendChild(row);
+
+
+      labelEls.push({ name, prob, fill });
+    }
+  }
+
+
+  async function predict() {
+    if (!model || !webcam || !running) return;
+
+
+    const prediction = await model.predict(webcam.canvas);
+
+
+    // Highest confidence first, so the winning class reads at a glance
+    const sorted = prediction
+      .map((p, i) => ({ ...p, i }))
+      .sort((a, b) => b.probability - a.probability);
+
+
+    for (let rank = 0; rank < sorted.length; rank++) {
+      const p = sorted[rank];
+      const el = labelEls[p.i];
+      if (!el) continue;
+
+
+      const pct = (p.probability * 100).toFixed(1);
+      el.name.textContent = (rank === 0 ? "▸ " : "") + p.className;
+      el.name.style.fontWeight = rank === 0 ? "600" : "400";
+      el.prob.textContent = pct + "%";
+      el.fill.style.width = pct + "%";
+      el.fill.style.opacity = rank === 0 ? "1" : "0.5";
+    }
+
+
+    // NEW: tally the item once it has been held steady
+    if (running && sorted.length) trackLive(sorted[0]);
+  }
+
+
+  async function loop() {
+    if (!running) return;
+    webcam.update();
+    await predict();
+    if (running) rafId = window.requestAnimationFrame(loop);
+  }
+
+
+  async function start() {
+    if (running) return;
+    startBtn.disabled = true;
+    setStatus("Requesting camera access…");
+
+
+    try {
+      await loadModel();
+      buildLabelRows();
+
+
+      webcam = new tmImage.Webcam(SIZE, SIZE, FLIP);
+      await webcam.setup();
+      await webcam.play();
+
+
+      webcamContainer.innerHTML = "";
+      webcamContainer.appendChild(webcam.canvas);
+
+
+      resetLiveTracking(); // NEW
+      running = true;
+      stopBtn.disabled = false;
+      setStatus("Running — " + maxPredictions + " classes loaded.");
+      rafId = window.requestAnimationFrame(loop);
+    } catch (err) {
+      console.error(err);
+      startBtn.disabled = false;
+      running = false;
+      stopBtn.disabled = true;
+
+
+      if (err && /permission|denied|NotAllowed/i.test(err.name + " " + err.message)) {
+        setStatus("Camera permission denied. Allow camera access and try again.", true);
+      } else {
+        setStatus("Could not start: " + (err && err.message ? err.message : err), true);
+      }
+    }
+  }
+
+
+  function stop() {
+    running = false;
+    resetLiveTracking(); // NEW
+    if (rafId !== null) {
+      window.cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+    if (webcam) {
+      // Stops the camera tracks so the recording indicator turns off
+      webcam.stop();
+      webcam = null;
+    }
+    webcamContainer.innerHTML = "";
+    labelContainer.innerHTML = "";
+    labelEls = [];
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+    setStatus("Stopped.");
+  }
+
+
+  startBtn.addEventListener("click", start);
+  stopBtn.addEventListener("click", stop);
+
+
+  // ============================================================
+  //  PHOTO MODE  —  capture one still, classify once, name it
+  // ============================================================
+
+
+  // This model reports imageSize 224 in metadata.json, so the input is
+  // fixed at 224x224.
+  function getInputSize() {
+    return 224;
+  }
+
+
+  // Draw the chosen photo onto a square canvas, centre-cropped, so the
+  // model sees the same framing it was trained on regardless of the
+  // original photo's resolution or aspect ratio.
+  function toSquareCanvas(img) {
+    const side = getInputSize();
+    const canvas = document.createElement("canvas");
+    canvas.width = side;
+    canvas.height = side;
+
+
+    const ctx = canvas.getContext("2d");
+    const sw = img.naturalWidth || img.width;
+    const sh = img.naturalHeight || img.height;
+    const crop = Math.min(sw, sh);
+
+
+    ctx.drawImage(
+      img,
+      (sw - crop) / 2, (sh - crop) / 2, crop, crop,  // source: centre square
+      0, 0, side, side                                // dest: model input
+    );
+
+
+    return canvas;
+  }
+
+
+  function renderVerdict(className, probability) {
+    const pct = (probability * 100).toFixed(1);
+    verdictBox.classList.add("visible");
+
+
+    if (probability < MIN_CONFIDENCE) {
+      verdictBadge.textContent = "Uncertain";
+      verdictBadge.classList.add("uncertain");
+      verdictLabel.textContent = "Not confirmed";
+      verdictNote.textContent =
+        "The model's best guess was \"" + className + "\" at only " + pct +
+        "%. Retake the photo closer to the item, on a plain background, with good light.";
+    } else {
+      verdictBadge.textContent = "Identified";
+      verdictBadge.classList.remove("uncertain");
+      verdictLabel.textContent = className;
+      verdictNote.textContent =
+        "The final predicted class for the captured image — " + pct + "% confidence.";
+    }
+  }
+
+
+  function renderScores(prediction) {
+    photoScores.innerHTML = "";
+
+
+    const title = document.createElement("p");
+    title.className = "scores-title";
+    title.textContent = "All class scores";
+    photoScores.appendChild(title);
+
+
+    prediction
+      .map((p, i) => ({ ...p, i }))
+      .sort((a, b) => b.probability - a.probability)
+      .forEach((p, rank) => {
+        const row = document.createElement("div");
+        row.className = "label-row";
+
+
+        const head = document.createElement("div");
+        head.className = "label-head";
+
+
+        const name = document.createElement("span");
+        name.textContent = (rank === 0 ? "▸ " : "") + p.className;
+        name.style.fontWeight = rank === 0 ? "600" : "400";
+
+
+        const prob = document.createElement("span");
+        prob.className = "prob";
+        prob.textContent = (p.probability * 100).toFixed(1) + "%";
+
+
+        head.append(name, prob);
+
+
+        const bar = document.createElement("div");
+        bar.className = "bar";
+        const fill = document.createElement("span");
+        fill.style.width = (p.probability * 100).toFixed(1) + "%";
+        fill.style.opacity = rank === 0 ? "1" : "0.5";
+        bar.appendChild(fill);
+
+
+        row.append(head, bar);
+        photoScores.appendChild(row);
+      });
+  }
+
+
+  async function classifyPhoto(file) {
+    verdictBox.classList.remove("visible");
+    photoScores.innerHTML = "";
+    setStatus("Classifying photo…");
+
+
+    // Show the photo the user just took
+    if (currentObjectURL) window.URL.revokeObjectURL(currentObjectURL);
+    currentObjectURL = window.URL.createObjectURL(file);
+    photoPreview.src = currentObjectURL;
+    photoPreview.classList.add("visible");
+    photoPlaceholder.classList.add("hidden");
+
+
+    try {
+      await loadModel();
+    } catch (err) {
+      console.error(err);
+      setStatus("Could not load the model. Check your connection and reload.", true);
+      takePhotoBtn.disabled = false;
+      return;
+    }
+
+
+    const img = new Image();
+
+
+    img.onload = async function () {
+      try {
+        const canvas = toSquareCanvas(img);
+        const prediction = await model.predict(canvas);
+
+
+        const sorted = prediction
+          .map((p, i) => ({ ...p, i }))
+          .sort((a, b) => b.probability - a.probability);
+
+
+        const top = sorted[0];
+        renderVerdict(top.className, top.probability);
+        renderScores(prediction);
+
+
+        // NEW: tally this take
+        if (top.probability >= MIN_CONFIDENCE) {
+          addEntry(top.className, top.probability, "photo");
+        } else {
+          addEntry(UNCERTAIN, top.probability, "photo", top.className);
+        }
+
+
+        setStatus("Done.");
+      } catch (err) {
+        console.error(err);
+        setStatus("Could not classify this image: " + (err && err.message ? err.message : err), true);
+      } finally {
+        takePhotoBtn.disabled = false;
+      }
+    };
+
+
+    img.onerror = function () {
+      setStatus("That file could not be read as an image.", true);
+      takePhotoBtn.disabled = false;
+    };
+
+
+    img.src = currentObjectURL;
+  }
+
+
+  takePhotoBtn.addEventListener("click", function () {
+    photoInput.click();
+  });
+
+
+  photoInput.addEventListener("change", function (event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+
+    takePhotoBtn.disabled = true;
+    clearPhotoBtn.disabled = false;
+    classifyPhoto(file);
+
+
+    // Allow re-selecting the same file later
+    photoInput.value = "";
+  });
+
+
+  clearPhotoBtn.addEventListener("click", function () {
+    if (currentObjectURL) {
+      window.URL.revokeObjectURL(currentObjectURL);
+      currentObjectURL = null;
+    }
+    photoPreview.classList.remove("visible");
+    photoPreview.removeAttribute("src");
+    photoPlaceholder.classList.remove("hidden");
+    verdictBox.classList.remove("visible");
+    photoScores.innerHTML = "";
+    clearPhotoBtn.disabled = true;
+    setStatus("Choose or take a photo to classify.");
+  });
+
+
+  // Release the camera when the tab/page goes away
+  window.addEventListener("pagehide", () => { if (running) stop(); });
+
+
+  // ============================================================
+  //  NEW: initial render of the saved tally
+  // ============================================================
+  loadHistory();
+  renderHistory();
+
+
+  // Quietly preload the model (no status messages) so the three
+  // segments show up at 0 right away. If it fails, nothing breaks:
+  // the normal loadModel() still runs when you start the camera or
+  // take a photo.
+  (async function preloadLabels() {
+    try {
+      const m = await tmImage.load(MODEL_URL + "model.json", MODEL_URL + "metadata.json");
+      if (!model) {
+        model = m;
+        maxPredictions = model.getTotalClasses();
+      }
+      captureLabels();
+    } catch (e) { /* ignore */ }
+  })();
+})();
+</script>
+
+
+</body>
+</html>
