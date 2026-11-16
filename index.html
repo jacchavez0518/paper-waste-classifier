@@ -37,9 +37,17 @@
     padding: 28px;
   }
 
-  h1 { margin: 0 0 4px; font-size: 1.35rem; letter-spacing: -0.01em; }
+  h1 {
+    margin: 0 0 4px;
+    font-size: 1.35rem;
+    letter-spacing: -0.01em;
+  }
 
-  .sub { margin: 0 0 22px; color: var(--muted); font-size: 0.875rem; }
+  .sub {
+    margin: 0 0 22px;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
 
   .tabs {
     display: flex;
@@ -56,9 +64,17 @@
     color: var(--muted);
   }
 
-  .tab.active { color: var(--text); border-bottom-color: var(--accent); }
+  .tab.active {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+  }
 
-  .controls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; }
+  .controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 22px;
+  }
 
   button {
     font: inherit;
@@ -76,10 +92,20 @@
   button:hover:not(:disabled) { border-color: var(--accent); }
   button:disabled { opacity: 0.45; cursor: not-allowed; }
 
-  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
   button.primary:hover:not(:disabled) { background: #3d7bf0; }
 
-  .stage { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
+  .stage {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
 
   #webcam-container canvas {
     width: 260px;
@@ -142,7 +168,12 @@
 
   .label-head .prob { color: var(--muted); font-variant-numeric: tabular-nums; }
 
-  .bar { height: 8px; border-radius: 99px; background: var(--border); overflow: hidden; }
+  .bar {
+    height: 8px;
+    border-radius: 99px;
+    background: var(--border);
+    overflow: hidden;
+  }
 
   .bar > span {
     display: block;
@@ -177,9 +208,18 @@
     border-color: rgba(255, 207, 107, 0.35);
   }
 
-  .verdict-label { font-size: 1.8rem; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 6px; }
+  .verdict-label {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+  }
 
-  .verdict-note { margin: 0 0 18px; color: var(--muted); font-size: 0.85rem; }
+  .verdict-note {
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
 
   .scores-title {
     font-size: 0.75rem;
@@ -189,11 +229,21 @@
     margin: 0 0 12px;
   }
 
-  .status { margin-top: 20px; font-size: 0.8rem; color: var(--muted); min-height: 1.2em; }
+  .status {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    min-height: 1.2em;
+  }
+
   .status.error { color: #ff6b6b; }
 
-  /* ---- Tally + history ---- */
-  .history { margin-top: 26px; padding-top: 22px; border-top: 1px solid var(--border); }
+  /* ================= NEW: Tally + history ================= */
+  .history {
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+  }
 
   .history-head {
     display: flex;
@@ -204,7 +254,11 @@
     margin-bottom: 14px;
   }
 
-  .history-head h2 { margin: 0; font-size: 1.05rem; letter-spacing: -0.01em; }
+  .history-head h2 {
+    margin: 0;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+  }
 
   button.danger { color: #ff8a8a; }
   button.danger:hover:not(:disabled) { border-color: #ff6b6b; }
@@ -217,15 +271,6 @@
     margin-bottom: 10px;
   }
 
-  .tally-pct {
-    margin-top: 2px;
-    font-size: 0.72rem;
-    color: var(--muted);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .tally-summary { margin: 0 0 18px; font-size: 0.8rem; color: var(--muted); }
-
   .tally-card {
     background: var(--bg);
     border: 1px solid var(--border);
@@ -234,7 +279,10 @@
     transition: border-color 0.2s, background 0.2s;
   }
 
-  .tally-card.flash { border-color: var(--accent); background: rgba(79, 140, 255, 0.12); }
+  .tally-card.flash {
+    border-color: var(--accent);
+    background: rgba(79, 140, 255, 0.12);
+  }
 
   .tally-count {
     font-size: 2.2rem;
@@ -249,6 +297,19 @@
     font-size: 0.75rem;
     color: var(--muted);
     text-transform: capitalize;
+  }
+
+  .tally-pct {
+    margin-top: 2px;
+    font-size: 0.72rem;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tally-summary {
+    margin: 0 0 18px;
+    font-size: 0.8rem;
+    color: var(--muted);
   }
 
   .history-list {
@@ -352,7 +413,7 @@
 
   <div id="status" class="status"></div>
 
-  <!-- ============ TALLY + HISTORY ============ -->
+  <!-- ============ NEW: TALLY + HISTORY ============ -->
   <section class="history" aria-labelledby="historyTitle">
     <div class="history-head">
       <h2 id="historyTitle">Tally &amp; history</h2>
@@ -373,7 +434,12 @@
 (function () {
   "use strict";
 
-  const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
+  // Correct model URL — keep this exact string. Previously the value was
+  // corrupted with stray text, which made the page request the model
+  // from the Live Server host instead of Google (hence the 404).
+  
+const MODEL_URL = "https://teachablemachine.withgoogle.com/models/dcKqWgKEP/";
+
 
   const SIZE = 260;   // display size in px
   const FLIP = true;  // mirror the webcam
@@ -381,12 +447,10 @@
   // Below this, we refuse to name a class instead of guessing.
   const MIN_CONFIDENCE = 0.60;
 
-  // Live mode: the same class must stay on top (>= MIN_CONFIDENCE) this
-  // long before it is counted once. It is not counted again until the
-  // top class changes or confidence drops (e.g. the item leaves frame).
+  // ---- NEW: tally settings ----
+  // Live mode: a class must stay on top (>= MIN_CONFIDENCE) this long
+  // before it is counted once, so one object isn't counted every frame.
   const HOLD_MS = 1500;
-
-  // Tally / history storage
   const STORAGE_KEY = "paperWasteHistory.v1";
   const MAX_HISTORY = 500;
   const UNCERTAIN = "__uncertain"; // a take the model wasn't sure about
@@ -414,6 +478,7 @@
   const verdictNote = document.getElementById("verdictNote");
   const photoScores = document.getElementById("photoScores");
 
+  // NEW
   const tallyEl = document.getElementById("tally");
   const tallySummary = document.getElementById("tallySummary");
   const resetBtn = document.getElementById("resetBtn");
@@ -428,13 +493,15 @@
   let lastStatusKey = "";
   let currentObjectURL = null;
 
-  let classLabels = [];     // known class names (from the model, once loaded)
-  let history = [];         // newest first: { id, label, confidence, source, time, guess }
+  // NEW
+  let classLabels = [];     // class names from the model
+  let history = [];         // newest first
   let liveCandidate = null; // class currently being held in live mode
   let liveSince = 0;
   let liveLocked = false;   // already counted this hold
 
   function setStatus(message, isError) {
+    // Avoid thrashing the DOM with the same message every frame
     const key = (isError ? "e:" : "i:") + message;
     if (key === lastStatusKey) return;
     lastStatusKey = key;
@@ -449,8 +516,13 @@
     const metadataURL = MODEL_URL + "metadata.json";
     model = await tmImage.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
+    captureLabels(); // NEW
+  }
 
-    // Make sure every class shows in the tally, even at 0
+  // ============================================================
+  //  NEW: TALLY + HISTORY  (saved in this browser via localStorage)
+  // ============================================================
+  function captureLabels() {
     try {
       classLabels = model.getClassLabels();
     } catch (e) {
@@ -459,9 +531,6 @@
     renderHistory();
   }
 
-  // ============================================================
-  //  TALLY + HISTORY  (saved in this browser via localStorage)
-  // ============================================================
   function loadHistory() {
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -600,11 +669,11 @@
 
   function addEntry(label, confidence, source, guess) {
     history.unshift({
-      guess: guess || null,
       id: Date.now() + "-" + Math.random().toString(36).slice(2, 7),
       label: label,
       confidence: confidence,
       source: source,
+      guess: guess || null,
       time: Date.now()
     });
     if (history.length > MAX_HISTORY) history.length = MAX_HISTORY;
@@ -653,34 +722,3 @@
   //  TAB SWITCHING
   // ============================================================
   function showLive() {
-    tabLive.classList.add("active");
-    tabPhoto.classList.remove("active");
-    liveMode.style.display = "";
-    photoMode.style.display = "none";
-    setStatus(running ? "Running — " + maxPredictions + " classes loaded." : "Camera off.");
-  }
-
-  function showPhoto() {
-    tabPhoto.classList.add("active");
-    tabLive.classList.remove("active");
-    photoMode.style.display = "";
-    liveMode.style.display = "none";
-    if (running) stop();
-    setStatus("Choose or take a photo to classify.");
-  }
-
-  tabLive.addEventListener("click", showLive);
-  tabPhoto.addEventListener("click", showPhoto);
-
-  // ============================================================
-  //  LIVE MODE
-  // ============================================================
-  function buildLabelRows() {
-    labelContainer.innerHTML = "";
-    labelEls = [];
-    for (let i = 0; i < maxPredictions; i++) {
-      const row = document.createElement("div");
-      row.className = "label-row";
-
-      const head = document.createElement("div");
-      hea
